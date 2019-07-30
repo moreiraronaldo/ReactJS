@@ -53,16 +53,38 @@ function App() {
     setPalpite(150);
   };
 
-  if (estado == "ENTRADA") {
+  if (estado === "ENTRADA") {
     return <button onClick={iniciarJogo}>Comecar a jogar!</button>;
   }
 
   const menor = () => {
     setNumPalpites(numPalpites + 1);
     setMax(palpite);
-    const proxPalpite = parseInt((palpite - min) / 2);
+    const proxPalpite = parseInt((palpite - min) / 2) + min;
     setPalpite(proxPalpite);
   };
+
+  const maior = () => {
+    setNumPalpites(numPalpites + 1);
+    setMin(palpite);
+    const proxPalpite = parseInt((max - palpite) / 2) + palpite;
+    setPalpite(proxPalpite);
+  };
+
+  const acertou = () => {
+    setEstado("FIM");
+  };
+
+  if (estado === "FIM") {
+    return (
+      <div>
+        <p>
+          Acertei o numero {palpite} com {numPalpites} chutes!
+        </p>
+        <button onClick={iniciarJogo}>Iniciar novamente!</button>
+      </div>
+    );
+  }
 
   return (
     <div className="App">
@@ -71,8 +93,8 @@ function App() {
         Min: {min} / Max: {max}
       </p>
       <button onClick={menor}>Menor</button>
-      <button>Acertou</button>
-      <button>Maior</button>
+      <button onClick={acertou}>Acertou</button>
+      <button onClick={maior}>Maior</button>
     </div>
   );
 }
